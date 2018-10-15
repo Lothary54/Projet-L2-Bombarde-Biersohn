@@ -3,20 +3,15 @@
 #include <iostream>
 
 #include "Vaisseau.h" 
+#include "Asteroide.h"
 
 using namespace std;
 
 int main() {
 
 	Vaisseau VaisseauJoueur ;
-	int age;
-
-	printf("Bienvenue !\n");
-	printf("Entrez votre age : ");
-	scanf_s("%d", &age);
-
-	printf("Vous avez %d ans", age);
-	_getch();
+	Asteroide Asteroide1;
+	// Faire un tableau de je sais pas encore combien d'asteroides
 
 
 	return 0;

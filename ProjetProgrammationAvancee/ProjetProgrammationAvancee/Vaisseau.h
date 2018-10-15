@@ -16,7 +16,7 @@ class Vaisseau
 	private:
 		int pointDeVie;
 		std::string nomVaisseau; //Pas de using namespace std, il faut donc mettre std:: devant string
-		
+		//QuelleImage
 		
 		
 };
