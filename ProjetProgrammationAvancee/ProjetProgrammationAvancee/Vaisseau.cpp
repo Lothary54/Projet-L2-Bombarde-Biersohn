@@ -1,6 +1,5 @@
 #include "Vaisseau.h"
 
-using namespace std;
 
 
 
@@ -8,7 +7,6 @@ Vaisseau::Vaisseau()
 
 {
 	pointDeVie = 3;
-	nomVaisseau = "VaisseauJoueur";
 	posX = 300;
 	posY = 300;
 }
