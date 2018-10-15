@@ -11,5 +11,6 @@ class Asteroide
 		int longueur, largeur;
 		//QuelleImage
 		int vitesseDeplacement;
+		int posX, posY;
 };
 
