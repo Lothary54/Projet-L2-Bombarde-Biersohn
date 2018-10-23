@@ -1,4 +1,6 @@
 #include "Map.h"
+#include <stdio.h> 
+#include <SDL.h>
 
 
 
@@ -10,6 +12,9 @@ Map::Map()
 	// ET
 	// PosX[i][j] = i * 30;        ==> 30 dépend de la taille des tiles
 	// PosY[i][j] = j * 30;        ==> 30 dépend de la taille des tiles
+
+	
+
 
 }
 
@@ -23,6 +28,13 @@ void Map::afficherMap()
 	//Boucle for pour tous les elements de imageMap
 	//imageMap[i,j].afficher  ( afficher ==> trouver une fonction des bitmaps ? )
 	// à la position posX[i][j], posY[i][j]
+
+	//Création des tiles avec SDL
+
+	
+
+
+
 }
 
 
