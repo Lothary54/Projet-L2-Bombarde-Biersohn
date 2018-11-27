@@ -1,6 +1,6 @@
 #include "Vaisseau.h"
-
-
+#include <stdio.h> 
+#include <SDL.h>
 
 
 Vaisseau::Vaisseau()
@@ -9,14 +9,12 @@ Vaisseau::Vaisseau()
 	pointDeVie = 3;
 	posX = 300;
 	posY = 300;
+	xVel = 0;
+	yVel = 0;
+	image = SDL_LoadBMP("ship1.bmp");
 }
 
 
-void Vaisseau::deplacement()
-{
-
-
-}
 
 
 void Vaisseau::tireLaser()
@@ -25,11 +23,33 @@ void Vaisseau::tireLaser()
 
 }
 
+void Vaisseau::dessinerVaisseau(Vaisseau vaisseauJoueur, SDL_Window* fenetre)
+{
+	if (vaisseauJoueur.image)
+	{
+		SDL_Rect dest = { vaisseauJoueur.posX, vaisseauJoueur.posY, 0, 0 };
+		SDL_BlitSurface(vaisseauJoueur.image, NULL, SDL_GetWindowSurface(fenetre), &dest); //Copie du sprite
+		SDL_UpdateWindowSurface(fenetre); //Mise à jour de la fenetre pour prendre en compte la copie du sprite
+		//SDL_FreeSurface(vaisseauJoueur.image); //Liberation de la ressource occupée par le sprite
+	}
+	else
+	{
+		fprintf(stdout, "Echec de chargement du sprite (%s)\n", SDL_GetError());
+	}
+
+}
+
+
+
 bool Vaisseau::estVivant()
 {
 	return true;
 
 }
+
+
+
+
 
 Vaisseau::~Vaisseau()
 {

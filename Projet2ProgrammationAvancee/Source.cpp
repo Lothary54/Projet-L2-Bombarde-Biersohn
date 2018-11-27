@@ -16,10 +16,9 @@ int main(int argc, char * argv[])
 {
 
 	Vaisseau vaisseauJoueur;
-	vector<Asteroide> asteroide(30); // de 0 à 29  ==> 30 astéroides
 	Map map1;
-	//Doit être effectué une seule fois, or de la boucle de jeu
-	map1.afficherMap();
+	vector<Asteroide> asteroide(30); // de 0 à 29  ==> 30 astéroides
+	
 	//Fait partie de la boucle de jeu, les asteroides "tombent" constamment
 	for (int i(0); i < int(asteroide.size()); ++i)
 	{
@@ -45,50 +44,72 @@ int main(int argc, char * argv[])
 		return EXIT_FAILURE;
 	}
 
-	SDL_Surface* tile[5][3];
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
+	
+	//Dessin de la map pour la première fois
+	map1.dessinerMap(fenetre);
 
-			tile[i][j] = SDL_LoadBMP("darkPurple.bmp");
-			if (tile[i][j])
-			{
-				SDL_Rect dest = { i * 256, j * 256, 0, 0 };
-				SDL_BlitSurface(tile[i][j], NULL, SDL_GetWindowSurface(fenetre), &dest); //Copie du sprite
-				SDL_UpdateWindowSurface(fenetre); //Mise à jour de la fenetre pour prendre en compte la copie du sprite
-				SDL_FreeSurface(tile[i][j]); //Liberation de la ressource occupée par le sprite
-			}
-			else
-			{
-				fprintf(stdout, "Echec de chargement du sprite (%s)\n", SDL_GetError());
-			}
-		}
-	}
+	//Dessin du Vaisseau pour la première fois
+	vaisseauJoueur.dessinerVaisseau(vaisseauJoueur, fenetre);
+
+
+
 
 	//Boucle principale
 	while (!terminer)
 	{
-		
-		while( SDL_PollEvent( &evenements) )
-			switch (evenements.type)
+		SDL_PollEvent(&evenements);
+		if (evenements.type == SDL_KEYDOWN)
+		{
+			switch (evenements.key.keysym.sym)
 			{
-				case SDL_QUIT:
-					terminer = true;
-					break;
-				case SDL_KEYDOWN:
-					switch (evenements.key.keysym.sym)
-					{
-						case SDLK_ESCAPE:
-						case SDLK_q:
-							terminer = true;
-							break;
-					}
+			case SDLK_ESCAPE: terminer = true; break;
+			case SDLK_z: 
+				if (vaisseauJoueur.yVel  > (-1) )
+					vaisseauJoueur.yVel  -= 1; 
+				break;
+			case SDLK_s: 
+				if (vaisseauJoueur.yVel  < 1 )
+					vaisseauJoueur.yVel += 1; 
+				break;
+			case SDLK_q:
+				if (vaisseauJoueur.xVel > (-1 ))
+					vaisseauJoueur.xVel  -= 1; 
+				break;
+			case SDLK_d: 
+				if (vaisseauJoueur.xVel  < 1 )
+					vaisseauJoueur.xVel  += 1; 
+				break;
+			default: break;
 			}
+		}
 
+		else if (evenements.type == SDL_KEYUP)
+		{
+			switch (evenements.key.keysym.sym)
+			{
+			case SDLK_z: 
+				vaisseauJoueur.yVel = 0;
+			case SDLK_s: 
+				vaisseauJoueur.yVel = 0;
+			case SDLK_q: 
+				vaisseauJoueur.xVel = 0;
+			case SDLK_d:
+				vaisseauJoueur.xVel = 0;
+			default: break;
+			}
+		}
+	
 
+		vaisseauJoueur.posX += vaisseauJoueur.xVel;
+		vaisseauJoueur.posY += vaisseauJoueur.yVel;
+		
+		vaisseauJoueur.dessinerVaisseau(vaisseauJoueur, fenetre);
+		
 	}
 	//Fin de la boucle principale
+
+	//Liberation de la ressource occupée par le sprite
+	SDL_FreeSurface(vaisseauJoueur.image); 
 	//Quitter SDL
 	SDL_DestroyWindow(fenetre);
 	SDL_Quit();

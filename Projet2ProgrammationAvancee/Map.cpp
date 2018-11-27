@@ -1,44 +1,38 @@
 #include "Map.h"
 #include <stdio.h> 
-#include <SDL.h>
-
 
 
 Map::Map()
 {
-	//Pour le tableau d'Images, en lisant un fichier txt, définir une Image pour chaque element du tableau
-	//boucle for pour tous les elements du tableau, ex :
-	// si caractere lu == 1 alors imageMap[i,j] = tiles1;
-	// ET
-	// PosX[i][j] = i * 30;        ==> 30 dépend de la taille des tiles
-	// PosY[i][j] = j * 30;        ==> 30 dépend de la taille des tiles
-
-	
-
-
 }
-
-
-
-
-
-
-void Map::afficherMap()
-{
-	//Boucle for pour tous les elements de imageMap
-	//imageMap[i,j].afficher  ( afficher ==> trouver une fonction des bitmaps ? )
-	// à la position posX[i][j], posY[i][j]
-
-	//Création des tiles avec SDL
-
-	
-
-
-
-}
-
 
 
 Map::~Map()
 {
+}
+
+void Map::dessinerMap(SDL_Window* fenetre)
+{
+	//Creation de la map
+	SDL_Surface* tile[5][3];
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+
+			tile[i][j] = SDL_LoadBMP("darkPurple.bmp");
+			if (tile[i][j])
+			{
+				SDL_Rect dest = { i * 256, j * 256, 0, 0 };
+				SDL_BlitSurface(tile[i][j], NULL, SDL_GetWindowSurface(fenetre), &dest); //Copie du sprite
+				SDL_UpdateWindowSurface(fenetre); //Mise à jour de la fenetre pour prendre en compte la copie du sprite
+				SDL_FreeSurface(tile[i][j]); //Liberation de la ressource occupée par le sprite
+			}
+			else
+			{
+				fprintf(stdout, "Echec de chargement du sprite (%s)\n", SDL_GetError());
+			}
+		}
+	}
+
 }

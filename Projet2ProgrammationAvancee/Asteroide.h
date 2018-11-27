@@ -1,3 +1,5 @@
+#include <SDL.h>
+
 class Asteroide
 {
 public:
@@ -10,6 +12,7 @@ public:
 private:
 	int longueur, largeur;
 	//QuelleImage
+	SDL_Surface* image;
 	int vitesseDeplacement;
 	int posX, posY;
 };
