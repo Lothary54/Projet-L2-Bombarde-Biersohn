@@ -8,7 +8,7 @@
 #include "Vaisseau.h" 
 #include "Asteroide.h"
 #include "Map.h"
-
+#include "time.h"
 #include <SDL.h>
 using namespace std;
 
@@ -17,14 +17,14 @@ int main(int argc, char * argv[])
 
 	Vaisseau vaisseauJoueur;
 	Map map1;
-	vector<Asteroide> asteroide(30); // de 0 à 29  ==> 30 astéroides
+	vector<Asteroide> asteroide(16); // de 0 à 29  ==> 30 astéroides
 	
-	//Fait partie de la boucle de jeu, les asteroides "tombent" constamment
-	for (int i(0); i < int(asteroide.size()); ++i)
-	{
-		asteroide[i].deplacement();
+	for (int i(0); i < 15; ++i) {
+		asteroide[i].posX = rand() % 1080 ;
+		asteroide[i].posY = rand() % 1000;
+		asteroide[i].posY = asteroide[i].posY - 2 * asteroide[i].posY;
 	}
-
+	
 
 	SDL_Window* fenetre;  //Declaration de la fenêtre
 	SDL_Event evenements; //Evenements liés à la fenêtre
@@ -63,21 +63,29 @@ int main(int argc, char * argv[])
 			switch (evenements.key.keysym.sym)
 			{
 			case SDLK_ESCAPE: terminer = true; break;
-			case SDLK_z: 
-				if (vaisseauJoueur.yVel  > (-1) )
-					vaisseauJoueur.yVel  -= 1; 
+			case SDLK_z:
+				if (vaisseauJoueur.yVel > (-1)) {
+					vaisseauJoueur.yVel -= 5;
+					
+				}
 				break;
 			case SDLK_s: 
-				if (vaisseauJoueur.yVel  < 1 )
-					vaisseauJoueur.yVel += 1; 
+				if (vaisseauJoueur.yVel < 1) {
+					vaisseauJoueur.yVel += 5;
+				
+				}
 				break;
 			case SDLK_q:
-				if (vaisseauJoueur.xVel > (-1 ))
-					vaisseauJoueur.xVel  -= 1; 
+				if (vaisseauJoueur.xVel > (-1)) {
+					vaisseauJoueur.xVel -= 5;
+					
+				}
 				break;
 			case SDLK_d: 
-				if (vaisseauJoueur.xVel  < 1 )
-					vaisseauJoueur.xVel  += 1; 
+				if (vaisseauJoueur.xVel < 1) {
+					vaisseauJoueur.xVel += 5;
+					
+				}
 				break;
 			default: break;
 			}
@@ -88,13 +96,13 @@ int main(int argc, char * argv[])
 			switch (evenements.key.keysym.sym)
 			{
 			case SDLK_z: 
-				vaisseauJoueur.yVel = 0;
+				vaisseauJoueur.yVel = 0; break;
 			case SDLK_s: 
-				vaisseauJoueur.yVel = 0;
+				vaisseauJoueur.yVel = 0; break;
 			case SDLK_q: 
-				vaisseauJoueur.xVel = 0;
+				vaisseauJoueur.xVel = 0; break;
 			case SDLK_d:
-				vaisseauJoueur.xVel = 0;
+				vaisseauJoueur.xVel = 0; break;
 			default: break;
 			}
 		}
@@ -103,7 +111,14 @@ int main(int argc, char * argv[])
 		vaisseauJoueur.posX += vaisseauJoueur.xVel;
 		vaisseauJoueur.posY += vaisseauJoueur.yVel;
 		
+		
+		map1.dessinerMap(fenetre);
+		for (int i(0); i < 15; ++i) {
+			asteroide[i].deplacement();
+			asteroide[i].dessinerAsteroide(asteroide[i], fenetre);
+		}
 		vaisseauJoueur.dessinerVaisseau(vaisseauJoueur, fenetre);
+		SDL_UpdateWindowSurface(fenetre);
 		
 	}
 	//Fin de la boucle principale

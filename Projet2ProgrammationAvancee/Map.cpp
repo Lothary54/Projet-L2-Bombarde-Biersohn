@@ -25,7 +25,7 @@ void Map::dessinerMap(SDL_Window* fenetre)
 			{
 				SDL_Rect dest = { i * 256, j * 256, 0, 0 };
 				SDL_BlitSurface(tile[i][j], NULL, SDL_GetWindowSurface(fenetre), &dest); //Copie du sprite
-				SDL_UpdateWindowSurface(fenetre); //Mise à jour de la fenetre pour prendre en compte la copie du sprite
+				
 				SDL_FreeSurface(tile[i][j]); //Liberation de la ressource occupée par le sprite
 			}
 			else
@@ -34,5 +34,6 @@ void Map::dessinerMap(SDL_Window* fenetre)
 			}
 		}
 	}
+	//SDL_UpdateWindowSurface(fenetre); //Mise à jour de la fenetre pour prendre en compte la copie du sprite
 
 }

@@ -17,6 +17,7 @@ public:
 	//QuelleImage
 	int posX, posY;
 	int xVel, yVel;
+	
 	SDL_Surface* image;
 
 private:
